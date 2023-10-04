@@ -74,3 +74,20 @@ class Complaints(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
+
+    def __str__(self):
+        return f'{self.author.username}, {self.flat.address}'
+
+
+class Owner(models.Model):
+    owner_name = models.CharField(verbose_name="ФИО владельца", max_length=50)
+    phone = models.CharField(verbose_name="Номер владельца", max_length=20)
+    pure_phone = PhoneNumberField(verbose_name="Нормализованный номер владельца", blank=True)
+    owner_flats = models.ManyToManyField(Flat, verbose_name="Квартиры в собственности", related_name="flats")
+
+    class Meta:
+        verbose_name = "Собственник"
+        verbose_name_plural = "Собственники"
+
+
+
