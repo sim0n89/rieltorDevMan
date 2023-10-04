@@ -53,7 +53,6 @@ class Flat(models.Model):
     like = models.ManyToManyField(User, verbose_name='Кто лайкнул',
                                   related_name="liked_flats", blank=True)
     owner_pure_phone = PhoneNumberField(blank=True, verbose_name="Нормализованный номер владельца")
-
     class Meta:
         verbose_name = "Квартира"
         verbose_name_plural = "Квартиры"
@@ -88,6 +87,9 @@ class Owner(models.Model):
     class Meta:
         verbose_name = "Собственник"
         verbose_name_plural = "Собственники"
+
+    def __str__(self):
+        return self.owner_name
 
 
 
