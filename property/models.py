@@ -50,9 +50,10 @@ class Flat(models.Model):
         db_index=True)
     
     new_building = models.BooleanField(verbose_name="Новостройка", null=True)
-    like = models.ManyToManyField(User, verbose_name='Кто лайкнул',
+    likes = models.ManyToManyField(User, verbose_name='Кто лайкнул',
                                   related_name="liked_flats", blank=True)
     owner_pure_phone = PhoneNumberField(blank=True, verbose_name="Нормализованный номер владельца")
+    
     class Meta:
         verbose_name = "Квартира"
         verbose_name_plural = "Квартиры"
