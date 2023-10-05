@@ -6,7 +6,8 @@ import phonenumbers
 
 def update_owner_pure_phone_in_flat_table(apps, schema_editor):
     Flat = apps.get_model("property", "Flat")
-    for flat in Flat.objects.all():
+    flats = Flat.objects.all()
+    for flat in flats.iterator():
         pure_phone = phonenumbers.parse(flat.owners_phonenumber, "RU")
         if phonenumbers.is_valid_number(pure_phone):
             flat.owner_pure_phone = pure_phone
@@ -15,9 +16,7 @@ def update_owner_pure_phone_in_flat_table(apps, schema_editor):
 
 def clear_owner_pure_phone_in_flat_table(apps, schema_editor):
     Flat = apps.get_model("property", "Flat")
-    for flat in Flat.objects.all():
-        flat.owner_pure_phone = ''
-        flat.save()
+    Flat.objects.all().update(owner_pure_phone='')
 
 
 class Migration(migrations.Migration):

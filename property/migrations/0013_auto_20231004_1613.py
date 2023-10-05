@@ -6,8 +6,8 @@ from django.db import migrations
 def copy_flats_to_owner(apps, schema_editor):
     Flat = apps.get_model("property", "Flat")
     Owner = apps.get_model("property", "Owner")
-
-    for flat in Flat.objects.all():
+    flats = Flat.objects.all()
+    for flat in flats.iterator():
         founded, created = Owner.objects.get_or_create(
             owner_name=flat.owner,
             phone=flat.owners_phonenumber
@@ -18,7 +18,8 @@ def copy_flats_to_owner(apps, schema_editor):
 
 def clear_owner_flats(apps, schema_editor):
     Owner = apps.get_model("property", "Owner")
-    for owner in Owner.objects.all():
+    owners = Owner.objects.all()
+    for owner in owners.iterator():
         owner.owner_flats.clear()
 
 
