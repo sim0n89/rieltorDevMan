@@ -63,12 +63,12 @@ class Flat(models.Model):
 
 class Complaints(models.Model):
     author = models.ForeignKey(User, verbose_name="Автор жалобы",
-                               related_name="user_complaints",
+                               related_name="complaints",
                                on_delete=models.CASCADE)
     flat = models.ForeignKey(Flat, verbose_name="Квартира",
-                             related_name="flat_complaints",
+                             related_name="complaints",
                              on_delete=models.CASCADE)
-    complaint_text = models.TextField(verbose_name="Текст отзыва")
+    complaint = models.TextField(verbose_name="Текст отзыва")
 
     class Meta:
         verbose_name = "Отзыв"
@@ -79,17 +79,17 @@ class Complaints(models.Model):
 
 
 class Owner(models.Model):
-    owner_name = models.CharField(verbose_name="ФИО владельца", max_length=50, db_index=True)
+    name = models.CharField(verbose_name="ФИО владельца", max_length=50, db_index=True)
     phone = models.CharField(verbose_name="Номер владельца", max_length=20)
     pure_phone = PhoneNumberField(verbose_name="Нормализованный номер владельца", blank=True)
-    owner_flats = models.ManyToManyField(Flat, verbose_name="Квартиры в собственности", related_name="flats")
+    flats = models.ManyToManyField(Flat, verbose_name="Квартиры в собственности", related_name="flats")
 
     class Meta:
         verbose_name = "Собственник"
         verbose_name_plural = "Собственники"
 
     def __str__(self):
-        return self.owner_name
+        return self.name
 
 
 

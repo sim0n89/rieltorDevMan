@@ -4,7 +4,7 @@ from .models import Flat, Complaints, Owner
 
 
 class OwnersInline(admin.TabularInline):
-    model = Owner.owner_flats.through
+    model = Owner.flats.through
     allow_add = True
     raw_id_fields = ('owner',)
     
@@ -27,11 +27,8 @@ class ComplaintsAdmin(admin.ModelAdmin):
 
 
 class OwnerAdmin(admin.ModelAdmin):
-    list_display = ["owner_name"]
-    raw_id_fields = ("owner_flats",)
-
-
-
+    list_display = ["name"]
+    raw_id_fields = ("flats",)
 
 
 admin.site.register(Flat, FlatAdmin)
