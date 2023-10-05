@@ -8,12 +8,12 @@ def copy_flats_to_owner(apps, schema_editor):
     Owner = apps.get_model("property", "Owner")
 
     for flat in Flat.objects.all():
-        p, created = Owner.objects.get_or_create(
+        founded, created = Owner.objects.get_or_create(
             owner_name=flat.owner,
             phone=flat.owners_phonenumber
         )
-        p.owner_flats.add(flat)
-        p.save()
+        founded.owner_flats.add(flat)
+        founded.save()
 
 
 def clear_owner_flats(apps, schema_editor):
